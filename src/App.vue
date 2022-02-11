@@ -57,7 +57,7 @@ _zenku__
 <div v-if="started" class="msg-section zenku-container card text-center shadow-lg">
 
   <div class="card-body p-5">
-      <h2 class="card-title">Love your sister better</h2>
+      <h2 class="card-title">{{ this.result }}</h2>
   </div>
 </div>
 
@@ -72,10 +72,56 @@ export default {
 
     return{
       started :false,
-      msg:""
+      msg:"",
+      result:""
     }
   },
-  components: {
+  methods: {
+    submitResult(){
+      let msg = this.msg,
+          messages = [
+            'Love Your Sister Better',
+            'I love you too',
+            'Never Try This Again',
+            'Love is hard, isnt\'it?'
+          ];
+
+      if( msg.length > 0 && this.msg.trim().slice(0,6).toLowerCase() == "i love")
+      {
+
+        
+        let name = this.msg.slice(6, this.msg.length);
+        /* mother*/
+        if(name.split(" ").includes("mom") || name.split(" ").includes("mother") )
+        {
+          this.result = "She loves you too!";
+          this.started = true;
+          return ;
+        }
+        
+        /*father*/
+        if(name.split(" ").includes("dad") || name.split(" ").includes("father"))
+        {
+          this.result = "He loves you too!";
+          this.started = true;
+          return ;
+        }
+
+        /*javascript*/
+        if(name.split(" ").includes("javascript") || name.split(" ").includes("js"))
+        {
+          this.result = "I love you too, oni-chan!";
+          let song = new Audio('@/assets/baka.mp3');
+          song.play();
+          this.started = true;
+          return ;
+        }
+
+        let index = Math.floor(Math.random() * messages.length);
+        this.started = true;
+        this.result = messages[index];
+      }
+    }
   }
 }
 </script>
