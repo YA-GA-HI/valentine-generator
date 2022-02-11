@@ -52,9 +52,9 @@ _zenku__
 
 
 <!--msg table-->
-<div v-if="started" class="msg-filter"></div>
+<div v-if="started" @click="this.started = false" class="msg-filter"></div>
 
-<div v-if="started" class="msg-section zenku-container card text-center shadow-lg">
+<div v-if="started" @click="this.started = false" class="msg-section zenku-container card text-center shadow-lg">
 
   <div class="card-body p-5">
       <h2 class="card-title">{{ this.result }}</h2>
@@ -65,6 +65,7 @@ _zenku__
 </template>
 
 <script>
+import sound from './assets/baka.mp3'
 export default {
   name: 'App',
   data()
@@ -83,7 +84,11 @@ export default {
             'Love Your Sister Better',
             'I love you too',
             'Never Try This Again',
-            'Love is hard, isnt\'it?'
+            'Love is hard, isnt\'it?',
+            "this melt my heart",
+            "that is a cute thing that i've been waiting for",
+            "thank you so much",
+            "sorry but i have a crush"
           ];
 
       if( msg.length > 0 && this.msg.trim().slice(0,6).toLowerCase() == "i love")
@@ -92,18 +97,29 @@ export default {
         
         let name = this.msg.slice(6, this.msg.length);
         /* mother*/
-        if(name.split(" ").includes("mom") || name.split(" ").includes("mother") )
+        if(name.split(" ").includes("mom") || name.split(" ").includes("mother") || name.split(" ").includes("mama") || name.split(" ").includes("mi") )
         {
           this.result = "She loves you too!";
           this.started = true;
+          this.msg = "";
           return ;
         }
         
         /*father*/
-        if(name.split(" ").includes("dad") || name.split(" ").includes("father"))
+        if(name.split(" ").includes("dad") || name.split(" ").includes("father") || name.split(" ").includes("papa") || name.split(" ").includes("ba") || name.split(" ").includes("baba")) 
         {
           this.result = "He loves you too!";
           this.started = true;
+          this.msg = "";
+          return ;
+        }
+
+        /*father*/
+        if(name.split(" ").includes("wiam") )
+        {
+          this.result = "Love Your Sister Better";
+          this.started = true;
+          this.msg = "";
           return ;
         }
 
@@ -111,14 +127,17 @@ export default {
         if(name.split(" ").includes("javascript") || name.split(" ").includes("js"))
         {
           this.result = "I love you too, oni-chan!";
-          let song = new Audio('@/assets/baka.mp3');
-          song.play();
+          let theSound = new Audio(sound);
+          theSound.currentTime = 1;
+          theSound.play();
           this.started = true;
+          this.msg = "";
           return ;
         }
 
         let index = Math.floor(Math.random() * messages.length);
         this.started = true;
+        this.msg = "";
         this.result = messages[index];
       }
     }
