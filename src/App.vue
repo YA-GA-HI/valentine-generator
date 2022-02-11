@@ -114,7 +114,8 @@ export default {
           return ;
         }
 
-        /*father*/
+        /*your girlfriend name for example*/
+        /* notice wiam is not my girlfriend */
         if(name.split(" ").includes("wiam") )
         {
           this.result = "Love Your Sister Better";
